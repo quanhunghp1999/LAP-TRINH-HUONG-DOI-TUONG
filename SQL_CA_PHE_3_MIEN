@@ -1,15 +1,11 @@
--- =====================================================
 -- BẢNG QUYỀN
--- =====================================================
 
 CREATE TABLE Quyen (
     ID_quyen INT AUTO_INCREMENT PRIMARY KEY,
     Ten_quyen VARCHAR(100) NOT NULL
 );
 
--- =====================================================
 -- BẢNG THÔNG TIN NGƯỜI DÙNG
--- =====================================================
 
 CREATE TABLE Thong_tin_nguoi_dung (
     ID_user INT AUTO_INCREMENT PRIMARY KEY,
@@ -26,9 +22,7 @@ CREATE TABLE Thong_tin_nguoi_dung (
     REFERENCES Quyen(ID_quyen)
 );
 
--- =====================================================
 -- BẢNG VOUCHER
--- =====================================================
 
 CREATE TABLE Voucher (
     ID_voucher INT AUTO_INCREMENT PRIMARY KEY,
@@ -40,18 +34,14 @@ CREATE TABLE Voucher (
     Trang_thai_voucher VARCHAR(50) DEFAULT 'active'
 );
 
--- =====================================================
 -- BẢNG BÀN
--- =====================================================
 
 CREATE TABLE Ban (
     ID_ban INT AUTO_INCREMENT PRIMARY KEY,
     Trang_thai_ban VARCHAR(50) DEFAULT 'trong'
 );
 
--- =====================================================
 -- BẢNG VẬT PHẨM (MENU)
--- =====================================================
 
 CREATE TABLE Vat_pham (
     ID_vat_pham INT AUTO_INCREMENT PRIMARY KEY,
@@ -60,9 +50,7 @@ CREATE TABLE Vat_pham (
     Trang_thai_vat_pham VARCHAR(50) DEFAULT 'con_ban'
 );
 
--- =====================================================
 -- BẢNG HÓA ĐƠN
--- =====================================================
 
 CREATE TABLE Hoa_don (
     ID_hoa_don INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,9 +69,7 @@ CREATE TABLE Hoa_don (
     REFERENCES Voucher(ID_voucher)
 );
 
--- =====================================================
 -- BẢNG CHI TIẾT HÓA ĐƠN
--- =====================================================
 
 CREATE TABLE Chi_tiet_hoa_don (
     ID_chi_tiet INT AUTO_INCREMENT PRIMARY KEY,
@@ -99,9 +85,7 @@ FOREIGN KEY (ID_hoa_don)
     REFERENCES Ban(ID_ban)
 );
 
--- =====================================================
 -- BẢNG ORDER ITEM
--- =====================================================
 
 CREATE TABLE Order_item (
     ID_order_item INT AUTO_INCREMENT PRIMARY KEY,
@@ -120,9 +104,7 @@ CREATE TABLE Order_item (
     REFERENCES Vat_pham(ID_vat_pham)
 );
 
--- =====================================================
--- DỮ LIỆU MẪU
--- =====================================================
+-- DATABASE
 
 INSERT INTO Quyen VALUES
 (1,'Admin'),
@@ -130,9 +112,7 @@ INSERT INTO Quyen VALUES
 (3,'NhanVien'),
 (4,'KhachHang');
 
--- =====================================================
 -- ADMIN + NHÂN VIÊN + KHÁCH HÀNG
--- =====================================================
 
 INSERT INTO Thong_tin_nguoi_dung
 VALUES
@@ -197,9 +177,7 @@ VALUES
 4
 );
 
--- =====================================================
 -- VOUCHER
--- =====================================================
 
 INSERT INTO Voucher VALUES
 (
@@ -239,9 +217,7 @@ INSERT INTO Voucher VALUES
 'active'
 );
 
--- =====================================================
 -- BÀN
--- =====================================================
 
 INSERT INTO Ban VALUES
 (1,'trong'),
@@ -251,9 +227,7 @@ INSERT INTO Ban VALUES
 (5,'trong'),
 (6,'dang_su_dung');
 
--- =====================================================
 -- MENU CAFE 3 MIỀN
--- =====================================================
 
 INSERT INTO Vat_pham VALUES
 (1,'Ca phe muoi',29000,'con_ban'),
@@ -265,9 +239,7 @@ INSERT INTO Vat_pham VALUES
 (7,'Americano',35000,'con_ban'),
 (8,'Espresso',30000,'con_ban');
 
--- =====================================================
 -- HÓA ĐƠN
--- =====================================================
 
 INSERT INTO Hoa_don VALUES
 (1,170000,'Tien mat',5,NULL),
@@ -277,9 +249,7 @@ INSERT INTO Hoa_don VALUES
 (5,200000,'Chuyen khoan',5,1),
 (6,85000,'Tien mat',6,NULL);
 
--- =====================================================
 -- CHI TIẾT HÓA ĐƠN
--- =====================================================
 
 INSERT INTO Chi_tiet_hoa_don VALUES
 (1,1,2),
@@ -289,9 +259,7 @@ INSERT INTO Chi_tiet_hoa_don VALUES
 (5,5,2),
 (6,6,6);
 
--- =====================================================
 -- MÓN ĐƯỢC GỌI
--- =====================================================
 
 INSERT INTO Order_item VALUES
 (1,2,5,1,1),
