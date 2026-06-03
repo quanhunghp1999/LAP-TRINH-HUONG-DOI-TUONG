@@ -1,1 +1,314 @@
+-- =====================================================
+-- BẢNG QUYỀN
+-- =====================================================
 
+CREATE TABLE Quyen (
+    ID_quyen INT AUTO_INCREMENT PRIMARY KEY,
+    Ten_quyen VARCHAR(100) NOT NULL
+);
+
+-- =====================================================
+-- BẢNG THÔNG TIN NGƯỜI DÙNG
+-- =====================================================
+
+CREATE TABLE Thong_tin_nguoi_dung (
+    ID_user INT AUTO_INCREMENT PRIMARY KEY,
+    Ho_va_ten VARCHAR(150) NOT NULL,
+    Ngay_sinh DATE,
+    Dia_chi VARCHAR(255),
+    Tai_khoan VARCHAR(100) UNIQUE NOT NULL,
+    Mat_khau VARCHAR(255) NOT NULL,
+    Trang_thai_user VARCHAR(50) DEFAULT 'active',
+    ID_quyen INT NOT NULL,
+
+    CONSTRAINT fk_nguoidung_quyen
+    FOREIGN KEY (ID_quyen)
+    REFERENCES Quyen(ID_quyen)
+);
+
+-- =====================================================
+-- BẢNG VOUCHER
+-- =====================================================
+
+CREATE TABLE Voucher (
+    ID_voucher INT AUTO_INCREMENT PRIMARY KEY,
+    Ma_voucher VARCHAR(50) UNIQUE NOT NULL,
+    Gia_tri DECIMAL(10,2) NOT NULL,
+    So_luong INT NOT NULL,
+    Ngay_bat_dau DATE NOT NULL,
+    Ngay_ket_thuc DATE NOT NULL,
+    Trang_thai_voucher VARCHAR(50) DEFAULT 'active'
+);
+
+-- =====================================================
+-- BẢNG BÀN
+-- =====================================================
+
+CREATE TABLE Ban (
+    ID_ban INT AUTO_INCREMENT PRIMARY KEY,
+    Trang_thai_ban VARCHAR(50) DEFAULT 'trong'
+);
+
+-- =====================================================
+-- BẢNG VẬT PHẨM (MENU)
+-- =====================================================
+
+CREATE TABLE Vat_pham (
+    ID_vat_pham INT AUTO_INCREMENT PRIMARY KEY,
+    Ten_vat_pham VARCHAR(150) NOT NULL,
+    Don_gia DECIMAL(10,2) NOT NULL,
+    Trang_thai_vat_pham VARCHAR(50) DEFAULT 'con_ban'
+);
+
+-- =====================================================
+-- BẢNG HÓA ĐƠN
+-- =====================================================
+
+CREATE TABLE Hoa_don (
+    ID_hoa_don INT AUTO_INCREMENT PRIMARY KEY,
+    Tong_tien DECIMAL(12,2) DEFAULT 0,
+    Phuong_thuc_thanh_toan VARCHAR(100),
+
+    ID_user INT NOT NULL,
+    ID_voucher INT NULL,
+
+    CONSTRAINT fk_hoadon_user
+    FOREIGN KEY (ID_user)
+    REFERENCES Thong_tin_nguoi_dung(ID_user),
+
+    CONSTRAINT fk_hoadon_voucher
+    FOREIGN KEY (ID_voucher)
+    REFERENCES Voucher(ID_voucher)
+);
+
+-- =====================================================
+-- BẢNG CHI TIẾT HÓA ĐƠN
+-- =====================================================
+
+CREATE TABLE Chi_tiet_hoa_don (
+    ID_chi_tiet INT AUTO_INCREMENT PRIMARY KEY,
+    ID_hoa_don INT NOT NULL,
+    ID_ban INT NOT NULL,
+
+    CONSTRAINT fk_cthd_hoadon
+FOREIGN KEY (ID_hoa_don)
+    REFERENCES Hoa_don(ID_hoa_don),
+
+    CONSTRAINT fk_cthd_ban
+    FOREIGN KEY (ID_ban)
+    REFERENCES Ban(ID_ban)
+);
+
+-- =====================================================
+-- BẢNG ORDER ITEM
+-- =====================================================
+
+CREATE TABLE Order_item (
+    ID_order_item INT AUTO_INCREMENT PRIMARY KEY,
+    So_luong INT NOT NULL,
+    Thoi_gian_goi INT,
+
+    ID_hoa_don INT NOT NULL,
+    ID_vat_pham INT NOT NULL,
+
+    CONSTRAINT fk_orderitem_hoadon
+    FOREIGN KEY (ID_hoa_don)
+    REFERENCES Hoa_don(ID_hoa_don),
+
+    CONSTRAINT fk_orderitem_vatpham
+    FOREIGN KEY (ID_vat_pham)
+    REFERENCES Vat_pham(ID_vat_pham)
+);
+
+-- =====================================================
+-- DỮ LIỆU MẪU
+-- =====================================================
+
+INSERT INTO Quyen VALUES
+(1,'Admin'),
+(2,'QuanLy'),
+(3,'NhanVien'),
+(4,'KhachHang');
+
+-- =====================================================
+-- ADMIN + NHÂN VIÊN + KHÁCH HÀNG
+-- =====================================================
+
+INSERT INTO Thong_tin_nguoi_dung
+VALUES
+(
+1,
+'Nguyen Dang Hong Hanh',
+'2004-09-05',
+'Dak Lak',
+'admin',
+'123',
+'active',
+1
+),
+(
+2,
+'Tran Thi Binh',
+'1992-07-22',
+'TP HCM',
+'quanly01',
+'123',
+'active',
+2
+),
+(
+3,
+'Le Hoang Cuong',
+'1998-11-05',
+'TP HCM',
+'nhanvien01',
+'123',
+'active',
+3
+),
+(
+4,
+'Pham Minh Dung',
+'1995-01-30',
+'TP HCM',
+'nhanvien02',
+'123',
+'active',
+3
+),
+(
+5,
+'Hoang Thi Em',
+'2000-06-18',
+'TP HCM',
+'khachhang01',
+'123',
+'active',
+4
+),
+(
+6,
+'Vu Quoc Phong',
+'1988-09-12',
+'TP HCM',
+'khachhang02',
+'123',
+'active',
+4
+);
+
+-- =====================================================
+-- VOUCHER
+-- =====================================================
+
+INSERT INTO Voucher VALUES
+(
+1,
+'GIAM10',
+10,
+100,
+'2026-01-01',
+'2026-12-31',
+'active'
+),
+(
+2,
+'GIAM50K',
+50000,
+50,
+'2026-06-01',
+'2026-06-30',
+'active'
+),
+(
+3,
+'WELCOME20',
+20,
+200,
+'2026-01-01',
+'2026-03-31',
+'expired'
+),
+(
+4,
+'VIP100K',
+100000,
+20,
+'2026-06-01',
+'2026-12-31',
+'active'
+);
+
+-- =====================================================
+-- BÀN
+-- =====================================================
+
+INSERT INTO Ban VALUES
+(1,'trong'),
+(2,'dang_su_dung'),
+(3,'dang_su_dung'),
+(4,'trong'),
+(5,'trong'),
+(6,'dang_su_dung');
+
+-- =====================================================
+-- MENU CAFE 3 MIỀN
+-- =====================================================
+
+INSERT INTO Vat_pham VALUES
+(1,'Ca phe muoi',29000,'con_ban'),
+(2,'Ca phe sua',30000,'con_ban'),
+(3,'Bac xiu',35000,'con_ban'),
+(4,'Tra dao',40000,'con_ban'),
+(5,'Tra chanh',25000,'con_ban'),
+(6,'Matcha Latte',45000,'con_ban'),
+(7,'Americano',35000,'con_ban'),
+(8,'Espresso',30000,'con_ban');
+
+-- =====================================================
+-- HÓA ĐƠN
+-- =====================================================
+
+INSERT INTO Hoa_don VALUES
+(1,170000,'Tien mat',5,NULL),
+(2,255000,'Chuyen khoan',5,2),
+(3,105000,'Tien mat',6,NULL),
+(4,360000,'The ngan hang',6,4),
+(5,200000,'Chuyen khoan',5,1),
+(6,85000,'Tien mat',6,NULL);
+
+-- =====================================================
+-- CHI TIẾT HÓA ĐƠN
+-- =====================================================
+
+INSERT INTO Chi_tiet_hoa_don VALUES
+(1,1,2),
+(2,2,3),
+(3,3,6),
+(4,4,3),
+(5,5,2),
+(6,6,6);
+
+-- =====================================================
+-- MÓN ĐƯỢC GỌI
+-- =====================================================
+
+INSERT INTO Order_item VALUES
+(1,2,5,1,1),
+(2,1,3,1,2),
+
+(3,2,7,2,3),
+(4,1,4,2,4),
+(5,1,5,2,5),
+
+(6,1,6,3,2),
+(7,2,3,3,1),
+
+(8,2,10,4,6),
+
+(9,1,4,5,3),
+(10,2,3,5,5),
+(11,1,5,5,2),
+
+(12,1,6,6,4),
+(13,1,3,6,1);
