@@ -1,0 +1,68 @@
+package com.cfbamien.dao;
+
+import com.cfbamien.DBConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class UserDAO {
+
+    public void hienThiTatCaUser() {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM Thong_tin_nguoi_dung";
+
+            Statement st = conn.createStatement();
+
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+
+                System.out.println(
+                        rs.getInt("ID_user")
+                        + " | "
+                        + rs.getString("Ho_va_ten")
+                        + " | "
+                        + rs.getString("Tai_khoan")
+                );
+
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public boolean dangNhap(String taiKhoan, String matKhau) {
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        String sql =
+                "SELECT * FROM Thong_tin_nguoi_dung "
+                + "WHERE Tai_khoan=? AND Mat_khau=?";
+
+        java.sql.PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setString(1, taiKhoan);
+        ps.setString(2, matKhau);
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return true;
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return false;
+}
+}
