@@ -1,0 +1,142 @@
+package com.cfbamien.dao;
+
+import com.cfbamien.DBConnection;
+import com.cfbamien.model.VatPham;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+public class VatPhamDAO {
+
+    public ArrayList<VatPham> getAll() {
+
+        ArrayList<VatPham> list = new ArrayList<>();
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM Vat_pham";
+
+            Statement st = conn.createStatement();
+
+            ResultSet rs = st.executeQuery(sql);
+
+            while (rs.next()) {
+
+                VatPham vp = new VatPham();
+
+                vp.setIdVatPham(rs.getInt("ID_vat_pham"));
+                vp.setTenVatPham(rs.getString("Ten_vat_pham"));
+                vp.setDonGia(rs.getDouble("Don_gia"));
+                vp.setTrangThaiVatPham(
+                        rs.getString("Trang_thai_vat_pham"));
+
+                list.add(vp);
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public boolean themVatPham(VatPham vp) {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql =
+                    "INSERT INTO Vat_pham "
+                    + "(Ten_vat_pham, Don_gia, Trang_thai_vat_pham) "
+                    + "VALUES (?, ?, ?)";
+
+            PreparedStatement ps =
+                    conn.prepareStatement(sql);
+
+            ps.setString(1, vp.getTenVatPham());
+            ps.setDouble(2, vp.getDonGia());
+            ps.setString(3, vp.getTrangThaiVatPham());
+
+            int kq = ps.executeUpdate();
+
+            conn.close();
+
+            return kq > 0;
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+    public boolean suaVatPham(VatPham vp) {
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        String sql =
+                "UPDATE Vat_pham "
+                + "SET Ten_vat_pham=?, "
+                + "Don_gia=?, "
+                + "Trang_thai_vat_pham=? "
+                + "WHERE ID_vat_pham=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setString(1, vp.getTenVatPham());
+        ps.setDouble(2, vp.getDonGia());
+        ps.setString(3, vp.getTrangThaiVatPham());
+        ps.setInt(4, vp.getIdVatPham());
+
+        int kq = ps.executeUpdate();
+
+        conn.close();
+
+        return kq > 0;
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return false;
+}
+    public boolean xoaVatPham(int idVatPham) {
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        String sql =
+                "DELETE FROM Vat_pham "
+                + "WHERE ID_vat_pham=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(1, idVatPham);
+
+        int kq = ps.executeUpdate();
+conn.close();
+
+        return kq > 0;
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return false;
+}
+}
