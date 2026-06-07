@@ -1,0 +1,53 @@
+package com.cfbamien.model;
+
+import java.sql.Date;
+
+public class HoaDon {
+
+    private int idHoaDon;
+    private double tongTien;
+    private String phuongThucThanhToan;
+    private int idUser;
+    private int idVoucher;
+
+    // GETTER SETTER
+    public int getIdHoaDon() {
+        return idHoaDon;
+    }
+
+    public void setIdHoaDon(int idHoaDon) {
+        this.idHoaDon = idHoaDon;
+    }
+
+    public double getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(double tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public String getPhuongThucThanhToan() {
+        return phuongThucThanhToan;
+    }
+
+    public void setPhuongThucThanhToan(String phuongThucThanhToan) {
+        this.phuongThucThanhToan = phuongThucThanhToan;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public int getIdVoucher() {
+        return idVoucher;
+    }
+
+    public void setIdVoucher(int idVoucher) {
+        this.idVoucher = idVoucher;
+    }
+}
