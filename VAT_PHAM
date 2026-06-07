@@ -1,0 +1,52 @@
+package com.cfbamien.model;
+
+public class VatPham {
+
+    private int idVatPham;
+    private String tenVatPham;
+    private double donGia;
+    private String trangThaiVatPham;
+
+    public VatPham() {
+    }
+
+    public VatPham(int idVatPham, String tenVatPham,
+                   double donGia, String trangThaiVatPham) {
+        this.idVatPham = idVatPham;
+        this.tenVatPham = tenVatPham;
+        this.donGia = donGia;
+        this.trangThaiVatPham = trangThaiVatPham;
+    }
+
+    public int getIdVatPham() {
+        return idVatPham;
+    }
+
+    public void setIdVatPham(int idVatPham) {
+        this.idVatPham = idVatPham;
+    }
+
+    public String getTenVatPham() {
+        return tenVatPham;
+    }
+
+    public void setTenVatPham(String tenVatPham) {
+        this.tenVatPham = tenVatPham;
+    }
+
+    public double getDonGia() {
+        return donGia;
+    }
+
+    public void setDonGia(double donGia) {
+        this.donGia = donGia;
+    }
+
+    public String getTrangThaiVatPham() {
+        return trangThaiVatPham;
+    }
+
+    public void setTrangThaiVatPham(String trangThaiVatPham) {
+        this.trangThaiVatPham = trangThaiVatPham;
+    }
+}
