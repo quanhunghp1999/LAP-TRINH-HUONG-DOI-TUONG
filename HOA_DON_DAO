@@ -1,0 +1,142 @@
+package com.cfbamien.dao;
+
+import com.cfbamien.DBConnection;
+import com.cfbamien.model.HoaDon;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class HoaDonDAO {
+
+    public ArrayList<HoaDon> getAll() {
+
+        ArrayList<HoaDon> list = new ArrayList<>();
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM Hoa_don";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                HoaDon hd = new HoaDon();
+
+                hd.setIdHoaDon(rs.getInt("ID_hoa_don"));
+                hd.setTongTien(rs.getDouble("Tong_tien"));
+                hd.setPhuongThucThanhToan(rs.getString("Phuong_thuc_thanh_toan"));
+                hd.setIdUser(rs.getInt("ID_user"));
+                hd.setIdVoucher(rs.getInt("ID_voucher"));
+
+                list.add(hd);
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public boolean themHoaDon(HoaDon hd) {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql =
+                    "INSERT INTO Hoa_don "
+                    + "(Tong_tien, Phuong_thuc_thanh_toan, ID_user, ID_voucher) "
+                    + "VALUES (?, ?, ?, ?)";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setDouble(1, hd.getTongTien());
+            ps.setString(2, hd.getPhuongThucThanhToan());
+            ps.setInt(3, hd.getIdUser());
+            ps.setInt(4, hd.getIdVoucher());
+
+            int kq = ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            return kq > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean suaHoaDon(HoaDon hd) {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql =
+                    "UPDATE Hoa_don SET "
+                    + "Tong_tien=?, "
+                    + "Phuong_thuc_thanh_toan=?, "
+                    + "ID_user=?, "
+                    + "ID_voucher=? "
+                    + "WHERE ID_hoa_don=?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setDouble(1, hd.getTongTien());
+            ps.setString(2, hd.getPhuongThucThanhToan());
+            ps.setInt(3, hd.getIdUser());
+            ps.setInt(4, hd.getIdVoucher());
+            ps.setInt(5, hd.getIdHoaDon());
+
+            int kq = ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            return kq > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean xoaHoaDon(int idHoaDon) {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql ="DELETE FROM Hoa_don WHERE ID_hoa_don=?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, idHoaDon);
+
+            int kq = ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            return kq > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+}
