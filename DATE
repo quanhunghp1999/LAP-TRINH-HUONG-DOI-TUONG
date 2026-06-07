@@ -1,0 +1,31 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.Calendar;
+
+public class DateUtil {
+
+    public static LocalDate parseDate(String input) {
+
+        if (input == null || input.trim().isEmpty()) {
+            throw new IllegalArgumentException("Ngày không được rỗng");
+        }
+
+        input = input.trim();
+        int yearNow = Calendar.getInstance().get(Calendar.YEAR);
+
+        try {
+
+            if (input.matches("\\d{1,2}[/-]\\d{1,2}")) {
+                input = input + "/" + yearNow;
+            }
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+
+            return LocalDate.parse(input.replace("-", "/"), formatter);
+
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Sai định dạng ngày: " + input);
+        }
+    }
+}
