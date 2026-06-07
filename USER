@@ -1,0 +1,73 @@
+package com.cfbamien.model;
+
+public class User {
+
+    private int idUser;
+    private String hoVaTen;
+    private String taiKhoan;
+    private String matKhau;
+    private String trangThaiUser;
+    private int idQuyen;
+
+    public User() {
+    }
+
+    public User(int idUser, String hoVaTen, String taiKhoan,
+            String matKhau, String trangThaiUser, int idQuyen) {
+
+        this.idUser = idUser;
+        this.hoVaTen = hoVaTen;
+        this.taiKhoan = taiKhoan;
+        this.matKhau = matKhau;
+        this.trangThaiUser = trangThaiUser;
+        this.idQuyen = idQuyen;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
+
+    public String getHoVaTen() {
+        return hoVaTen;
+    }
+
+    public void setHoVaTen(String hoVaTen) {
+        this.hoVaTen = hoVaTen;
+    }
+
+    public String getTaiKhoan() {
+        return taiKhoan;
+    }
+
+    public void setTaiKhoan(String taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
+
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
+    }
+
+    public String getTrangThaiUser() {
+        return trangThaiUser;
+    }
+
+    public void setTrangThaiUser(String trangThaiUser) {
+        this.trangThaiUser = trangThaiUser;
+    }
+
+    public int getIdQuyen() {
+        return idQuyen;
+    }
+
+    public void setIdQuyen(int idQuyen) {
+        this.idQuyen = idQuyen;
+    }
+}
