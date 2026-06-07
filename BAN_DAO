@@ -1,0 +1,141 @@
+package com.cfbamien.dao;
+
+import com.cfbamien.DBConnection;
+import com.cfbamien.model.Ban;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.sql.PreparedStatement;
+
+public class BanDAO {
+
+    public ArrayList<Ban> getAll() {
+
+        ArrayList<Ban> list =
+                new ArrayList<>();
+
+        try {
+
+            Connection conn =
+                    DBConnection.getConnection();
+
+            String sql =
+                    "SELECT * FROM Ban";
+
+            Statement st =
+                    conn.createStatement();
+
+            ResultSet rs =
+                    st.executeQuery(sql);
+
+            while (rs.next()) {
+
+                Ban b = new Ban();
+
+                b.setIdBan(
+                        rs.getInt("ID_ban"));
+
+                b.setTrangThaiBan(
+                        rs.getString("Trang_thai_ban"));
+
+                list.add(b);
+            }
+
+            conn.close();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+    public boolean themBan(Ban b) {
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        String sql =
+                "INSERT INTO Ban(Trang_thai_ban) "
+                + "VALUES(?)";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setString(1, b.getTrangThaiBan());
+
+        int kq = ps.executeUpdate();
+
+        conn.close();
+
+        return kq > 0;
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return false;
+}
+    public boolean suaBan(Ban b) {
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        String sql =
+                "UPDATE Ban "
+                + "SET Trang_thai_ban=? "
+                + "WHERE ID_ban=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setString(1, b.getTrangThaiBan());
+        ps.setInt(2, b.getIdBan());
+
+        int kq = ps.executeUpdate();
+
+        conn.close();
+
+        return kq > 0;
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return false;
+}
+    public boolean xoaBan(int idBan) {
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        String sql =
+                "DELETE FROM Ban "
+                + "WHERE ID_ban=?";
+
+        PreparedStatement ps =
+                conn.prepareStatement(sql);
+
+        ps.setInt(1, idBan);
+
+        int kq = ps.executeUpdate();
+
+        conn.close();
+
+        return kq > 0;
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+    }
+
+    return false;
+}
+}
