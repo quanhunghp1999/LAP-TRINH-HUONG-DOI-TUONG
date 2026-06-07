@@ -1,0 +1,151 @@
+package com.cfbamien.dao;
+
+import com.cfbamien.DBConnection;
+import com.cfbamien.model.Voucher;
+
+import java.sql.*;
+import java.util.ArrayList;
+
+public class VoucherDAO {
+
+    public ArrayList<Voucher> getAll() {
+
+        ArrayList<Voucher> list = new ArrayList<>();
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql = "SELECT * FROM Voucher";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                Voucher v = new Voucher();
+
+                v.setIdVoucher(rs.getInt("ID_voucher"));
+                v.setMaVoucher(rs.getString("Ma_voucher"));
+                v.setGiaTri(rs.getDouble("Gia_tri"));
+                v.setSoLuong(rs.getInt("So_luong"));
+
+                v.setNgayBatDau(rs.getDate("Ngay_bat_dau"));
+                v.setNgayKetThuc(rs.getDate("Ngay_ket_thuc"));
+
+                v.setTrangThaiVoucher(rs.getString("Trang_thai_voucher"));
+
+                list.add(v);
+            }
+
+            rs.close();
+            ps.close();
+            conn.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list;
+    }
+
+    public boolean themVoucher(Voucher v) {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql =
+                    "INSERT INTO Voucher "
+                    + "(Ma_voucher, Gia_tri, So_luong, Ngay_bat_dau, Ngay_ket_thuc, Trang_thai_voucher) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, v.getMaVoucher());
+            ps.setDouble(2, v.getGiaTri());
+            ps.setInt(3, v.getSoLuong());
+            ps.setDate(4, v.getNgayBatDau());
+            ps.setDate(5, v.getNgayKetThuc());
+            ps.setString(6, v.getTrangThaiVoucher());
+
+            int kq = ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            return kq > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean suaVoucher(Voucher v) {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql =
+                    "UPDATE Voucher SET "
+                    + "Ma_voucher=?, "
+                    + "Gia_tri=?, "
+                    + "So_luong=?, "
+                    + "Ngay_bat_dau=?, "
+                    + "Ngay_ket_thuc=?, "
+                    + "Trang_thai_voucher=? "
+                    + "WHERE ID_voucher=?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setString(1, v.getMaVoucher());
+            ps.setDouble(2, v.getGiaTri());
+            ps.setInt(3, v.getSoLuong());
+            ps.setDate(4, v.getNgayBatDau());
+            ps.setDate(5, v.getNgayKetThuc());
+            ps.setString(6, v.getTrangThaiVoucher());
+ps.setInt(7, v.getIdVoucher());
+
+            int kq = ps.executeUpdate();
+
+            ps.close();
+            conn.close();
+
+            return kq > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean xoaVoucher(int idVoucher) {
+
+        try {
+
+            Connection conn = DBConnection.getConnection();
+
+            String sql =
+                    "DELETE FROM Voucher WHERE ID_voucher=?";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+
+            ps.setInt(1, idVoucher);
+
+            int kq = ps.executeUpdate();
+
+            conn.close();
+
+            return kq > 0;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+}
