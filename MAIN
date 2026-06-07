@@ -4,11 +4,11 @@ import com.cfbamien.view.DangNhapForm;
 
 public class Main {
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
-java.awt.EventQueue.invokeLater(() -> {
-new DangNhapForm().setVisible(true);
-});
+        java.awt.EventQueue.invokeLater(() -> {
+            new DangNhapForm().setVisible(true);
+        });
 
-}
+    }
 }
