@@ -1,0 +1,31 @@
+package com.cfbamien.model;
+
+public class Ban {
+
+    private int idBan;
+    private String trangThaiBan;
+
+    public Ban() {
+    }
+
+    public Ban(int idBan, String trangThaiBan) {
+        this.idBan = idBan;
+        this.trangThaiBan = trangThaiBan;
+    }
+
+    public int getIdBan() {
+        return idBan;
+    }
+
+    public void setIdBan(int idBan) {
+        this.idBan = idBan;
+    }
+
+    public String getTrangThaiBan() {
+        return trangThaiBan;
+    }
+
+    public void setTrangThaiBan(String trangThaiBan) {
+        this.trangThaiBan = trangThaiBan;
+    }
+}
