@@ -4,13 +4,13 @@ import com.cfbamien.dao.UserDAO;
 
 public class TestLogin {
 
-public static void main(String[] args) {
+    public static void main(String[] args) {
 
-UserDAO dao = new UserDAO();
+        UserDAO dao = new UserDAO();
 
-boolean kq = dao.dangNhap("admin", "123");
+        boolean kq = dao.dangNhap("admin", "123");
 
-System.out.println("Ket qua = " + kq);
+        System.out.println("Ket qua = " + kq);
 
-}
+    }
 }
