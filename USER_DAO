@@ -4,6 +4,8 @@ import com.cfbamien.DBConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import com.cfbamien.model.User;
+import java.util.ArrayList;
 
 public class UserDAO {
 
@@ -64,5 +66,36 @@ public class UserDAO {
     }
 
     return false;
+}
+    public ArrayList<User> getAll() {
+
+    ArrayList<User> list = new ArrayList<>();
+
+    try {
+
+        Connection conn = DBConnection.getConnection();
+
+        String sql = "SELECT * FROM Thong_tin_nguoi_dung";
+
+        Statement st = conn.createStatement();
+
+        ResultSet rs = st.executeQuery(sql);
+
+        while (rs.next()) {
+
+            User u = new User();
+
+            u.setIdUser(rs.getInt("ID_user"));
+
+            list.add(u);
+        }
+
+        conn.close();
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    return list;
 }
 }
